@@ -333,10 +333,10 @@ public class HprofParser {
   }
 
   // returns number of bytes parsed
-  private int parseHeapDump(DataInput in, int idSize, boolean isFirstPass) throws IOException {
+  private long parseHeapDump(DataInput in, int idSize, boolean isFirstPass) throws IOException {
 
     byte tag = in.readByte();
-    int bytesRead = 1;
+    long bytesRead = 1;
 
     long l1, l2, l3, l4, l5, l6, l7;
     int i1, i2;
@@ -653,59 +653,61 @@ public class HprofParser {
         bytesRead += idSize + 9;
 
         Preconditions.checkState(i2 >= 0);
-        Value<?>[] vs = new Value[i2];
+        //Value<?>[] vs = new Value[i2];
         Type t = Type.hprofTypeToEnum(b1);
-        for (int i=0; i<vs.length; i++) {
+        //for (int i=0; i<vs.length; i++) {
+        System.out.println("reading array of " + i2 + " " + t + ", object id " + l1);
+        for (int i=0; i<i2; i++) {
           switch (t) {
             case OBJ:
               long vobj = readId(idSize, in);
-              vs[i] = new Value<>(t, vobj);
+              //vs[i] = new Value<>(t, vobj);
               bytesRead += idSize;
               break;
             case BOOL:
               boolean vbool = in.readBoolean();
-              vs[i] = new Value<>(t, vbool);
+              //vs[i] = new Value<>(t, vbool);
               bytesRead += 1;
               break;
             case CHAR:
               char vc = in.readChar();
-              vs[i] = new Value<>(t, vc);
+              //vs[i] = new Value<>(t, vc);
               bytesRead += 2;
               break;
             case FLOAT:
               float vf = in.readFloat();
-              vs[i] = new Value<>(t, vf);
+              //vs[i] = new Value<>(t, vf);
               bytesRead += 4;
               break;
             case DOUBLE:
               double vd = in.readDouble();
-              vs[i] = new Value<>(t, vd);
+              //vs[i] = new Value<>(t, vd);
               bytesRead += 8;
               break;
             case BYTE:
               byte vbyte = in.readByte();
-              vs[i] = new Value<>(t, vbyte);
+              //vs[i] = new Value<>(t, vbyte);
               bytesRead += 1;
               break;
             case SHORT:
               short vshort = in.readShort();
-              vs[i] = new Value<>(t, vshort);
+              //vs[i] = new Value<>(t, vshort);
               bytesRead += 2;
               break;
             case INT:
               int vi = in.readInt();
-              vs[i] = new Value<>(t, vi);
+              //vs[i] = new Value<>(t, vi);
               bytesRead += 4;
               break;
             case LONG:
               long vlong = in.readLong();
-              vs[i] = new Value<>(t, vlong);
+              //vs[i] = new Value<>(t, vlong);
               bytesRead += 8;
               break;
           }
         } 
         if (isFirstPass) {
-          handler.primArrayDump(l1, i1, b1, vs);
+          handler.primArrayDump(l1, i1, b1, null);
         }
         break;
 

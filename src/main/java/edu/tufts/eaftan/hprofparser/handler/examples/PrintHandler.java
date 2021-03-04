@@ -352,7 +352,7 @@ public class PrintHandler extends NullRecordHandler {
 
   @Override
   public void objArrayDump(long objId, int stackTraceSerialNum, 
-      long elemClassObjId, long[] elems) {
+                           long elemClassObjId, long[] elems) {
     System.out.println("Object Array Dump:");
     System.out.println("    object id: " + objId);
     System.out.println("    stack trace serial num: " + stackTraceSerialNum);
@@ -365,17 +365,19 @@ public class PrintHandler extends NullRecordHandler {
 
   @Override
   public void primArrayDump(long objId, int stackTraceSerialNum, 
-      byte elemType, Value<?>[] elems) {
+                            byte elemType, Value<?>[] elems) {
     System.out.println("Primitive Array Dump:");
     System.out.println("    object id: " + objId);
     System.out.println("    stack trace serial num: " + stackTraceSerialNum);
-    System.out.print("    number of elements: ");
-    System.out.println(elems.length);
+    //System.out.print("    number of elements: ");
+    //System.out.println(elems.length);
     System.out.println("    element type: " + getBasicType(elemType));
-  
-    for (int i=0; i<elems.length; i++) {
-      System.out.println("        element " + (i+1) + ": " + elems[i]);
-    }
+    
+    //if (elems != null) {
+    //    for (int i=0; i<elems.length; i++) {
+    //        System.out.println("        element " + (i+1) + ": " + elems[i]);
+    //    }
+    //}
   } 
 
 
